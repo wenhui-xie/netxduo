@@ -32,8 +32,17 @@ jobs:
       with:
         submodules: true
 
-    - name: Install softwares
-      run: "cd scripts && ./install.sh"
+    - name: Checkout submodules
+      run: |
+        if not exit ./test/cmake/threadx git clone https://github.com/azure-rtos/threadx.git ./test/cmake/threadx --depth 1
+
+    - name: CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ../test/cmake/azure_iot -A Win32
 
     - name: Build
-      run: "cd scripts && ./build_azure_iot_win32.sh"
+      run: |
+        cd build
+        cmake --build .
