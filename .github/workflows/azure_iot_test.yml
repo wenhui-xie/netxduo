@@ -52,7 +52,7 @@ jobs:
         for i in `find . -name "*.a"`; do arm-none-eabi-size --totals $i; echo ""; done
 
     - name: Test
-      run: "cd build && ctest -T test --no-compress-output --test-output-size-passed 4194304 --test-output-size-failed 4194304 --output-on-failure --timeout 180"
+      run: "cd build && ctest -T test --no-compress-output --test-output-size-passed 4194304 --test-output-size-failed 4194304 --output-on-failure --timeout 180 --output-junit azure_iot_test.xml"
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2.11.0
@@ -60,7 +60,7 @@ jobs:
       with:
         check_name: Test Results Azure IoT
         files: |
-          ./build/Testing/**/*.xml
+          ./build/*.xml
 
     - name: Upload Test Results
       if: success() || failure()
