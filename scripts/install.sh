@@ -21,7 +21,7 @@ sudo apt-get install -y \
     gawk \
     libssl-dev:i386 \
     libcmocka-dev:i386 \
-    gcc-arm-none-eab \
+    gcc-arm-none-eabi \
     software-properties-common
 
 wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
