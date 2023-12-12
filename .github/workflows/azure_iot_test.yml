@@ -31,10 +31,13 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    
+
     - name: Install softwares
       run: "cd test/regression/azure_iot/.build && ./install_softwares.sh"
-    
+
+    - name: Checkout submodules
+      run: "cd test/regression/azure_iot/.build && ./checkout_submodules.sh"
+
     - name: CMake
       run: |
         mkdir build

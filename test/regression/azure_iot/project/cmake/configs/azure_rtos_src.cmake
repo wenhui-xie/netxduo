@@ -1,5 +1,5 @@
 # Set folder
-set(TX_FOLDER "${PROJECT_SOURCE_DIR}/../../../../cmake/threadx")
+set(TX_FOLDER "${PROJECT_SOURCE_DIR}/../../threadx")
 set(NXD_FOLDER "${PROJECT_SOURCE_DIR}/../../../../..")
 
 # Add tx
