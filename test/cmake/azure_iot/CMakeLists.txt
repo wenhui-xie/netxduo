@@ -23,8 +23,6 @@ set(BUILD_CONFIGURATIONS
 set(CMAKE_CONFIGURATION_TYPES
     ${BUILD_CONFIGURATIONS}
     CACHE STRING "list of supported configuration types" FORCE)
-set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-                                              ${CMAKE_CONFIGURATION_TYPES})
 list(GET CMAKE_CONFIGURATION_TYPES 0 BUILD_TYPE)
 if((NOT CMAKE_BUILD_TYPE) OR (NOT ("${CMAKE_BUILD_TYPE}" IN_LIST
                                     CMAKE_CONFIGURATION_TYPES)))
@@ -32,6 +30,8 @@ if((NOT CMAKE_BUILD_TYPE) OR (NOT ("${CMAKE_BUILD_TYPE}" IN_LIST
       "${BUILD_TYPE}"
       CACHE STRING "Build Type of the project" FORCE)
 endif()
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+                                              ${CMAKE_CONFIGURATION_TYPES})
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}.")
