@@ -14,7 +14,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "linux_job"
-  run_tests:
+  AzureIoT:
 
     permissions:
       contents: read
@@ -36,6 +36,10 @@ jobs:
             cflags: "-DAZ_NO_PRECONDITION_CHECKING -DAZ_NO_LOGGING -DNX_DISABLE_IPV6"
             cmake_flags: "-DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT"
             coverage: false
+          - name: "disable_security_module"
+            cflags: ""
+            cmake_flags: "-DNX_AZURE_DISABLE_IOT_SECURITY_MODULE=ON"
+            coverage: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -50,7 +54,7 @@ jobs:
     - name: Checkout submodules
       run: "cd test/regression/azure_iot/.build && ./checkout_submodules.sh"
 
-    - name: CMake ${{ matrix.name }}
+    - name: CMake
       run: |
         mkdir build
         echo "CFLAGS: ${{ matrix.cflags }}"
@@ -72,7 +76,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.11.0
       if: always()
       with:
-        check_name: Test Results AzureIoT
+        check_name: Test Results AzureIoT(${{ matrix.name }})
         files: |
           ./build/*.xml
 
