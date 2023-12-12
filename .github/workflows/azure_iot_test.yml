@@ -25,6 +25,16 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        name: ["enable_all"]
+        cflags: [""]
+        cmake_flags: ["-DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT"]
+        include:
+          - name: "disable_precondition"
+            cflags: "-DAZ_NO_PRECONDITION_CHECKING -DAZ_NO_LOGGING -DNX_DISABLE_IPV6"
+            cmake_flags: "-DNX_DISABLE_IPV6=ON -DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT"
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Check out the repository
@@ -38,10 +48,12 @@ jobs:
     - name: Checkout submodules
       run: "cd test/regression/azure_iot/.build && ./checkout_submodules.sh"
 
-    - name: CMake
+    - name: CMake ${{ matrix.name }}
       run: |
         mkdir build
-        cd build && CFLAGS="" cmake ../test/regression/azure_iot/project/cmake -GNinja -DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT
+        echo "CFLAGS: ${{ matrix.cflags }}"
+        echo "CMake FLAGS: ${{ matrix.cmake_flags }}"
+        cd build && CFLAGS="${{ matrix.cflags }}" cmake ../test/regression/azure_iot/project/cmake -GNinja ${{ matrix.cmake_flags }}
 
     - name: Build
       run: "cd build && ninja"
