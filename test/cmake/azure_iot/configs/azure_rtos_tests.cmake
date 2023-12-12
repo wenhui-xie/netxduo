@@ -5,10 +5,6 @@ set(SDK_FOLDER "${PROJECT_SOURCE_DIR}/../../../addons/azure_iot")
 set(SDK_CERT_SAMPLE_FOLDER "${SDK_FOLDER}/samples/cert")
 set(AZURE_EMBEDDED_SDK_TESTS_FOLDER "${PROJECT_SOURCE_DIR}/../../regression/azure_iot")
 
-set(NX_AZURE_DISABLE_IOT_SECURITY_MODULE
-    OFF
-    CACHE BOOL "Disable Azure IoT Security Module (default is OFF)")
-
 include_directories("${SDK_CERT_SAMPLE_FOLDER}/")
 aux_source_directory(${SDK_CERT_SAMPLE_FOLDER}/ CERT_SAMPLE_SRC)
 
