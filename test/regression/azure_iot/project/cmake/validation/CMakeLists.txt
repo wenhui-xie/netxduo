@@ -23,7 +23,7 @@ if(WIN32)
 else()
   if(THREADX_ARCH STREQUAL "linux")
     set(ADDITIONAL_C_FLAGS
-        "$ENV{CFLAGS} -O0 -g3 -ggdb -m32 -gdwarf-2 -fdiagnostics-color -fprofile-arcs -ftest-coverage"
+        "$ENV{CFLAGS} -O0 -g3 -ggdb -m32 -gdwarf-2 -fdiagnostics-color -fprofile-arcs -ftest-coverage -Wno-error=misleading-indentation"
     )
   endif()
 endif()
