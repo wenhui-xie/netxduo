@@ -37,7 +37,7 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}.")
 
 set(default_build_coverage)
-set(disable_precondition_biuld -DAZ_NO_PRECONDITION_CHECKING -DAZ_NO_LOGGING -DNX_DISABLE_IPV6)
+set(disable_precondition_build -DAZ_NO_PRECONDITION_CHECKING -DAZ_NO_LOGGING -DNX_DISABLE_IPV6)
 set(disable_security_module_build -DNX_AZURE_DISABLE_IOT_SECURITY_MODULE)
 
 # Set property for folder
@@ -84,7 +84,8 @@ add_definitions(
   -DNXD_MQTT_PING_TIMEOUT_DELAY=500
   -DNXD_MQTT_SOCKET_TIMEOUT=0
   -DNXD_MQTT_OVER_WEBSOCKET
-  -DNX_AZURE_IOT_ADU_AGENT_PROXY_UPDATE_COUNT=1)
+  -DNX_AZURE_IOT_ADU_AGENT_PROXY_UPDATE_COUNT=1
+  ${${CMAKE_BUILD_TYPE}})
 
 # Include azure rtos cmake
 include(configs/azure_rtos_src.cmake)
