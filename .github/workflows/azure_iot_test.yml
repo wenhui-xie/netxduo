@@ -34,7 +34,7 @@ jobs:
 
     - name: Checkout submodules
       run: |
-        if not exit ./test/cmake/threadx git clone https://github.com/azure-rtos/threadx.git ./test/cmake/threadx --depth 1
+        if (!(Test-Path ./test/cmake/threadx)) {git clone https://github.com/azure-rtos/threadx.git ./test/cmake/threadx --depth 1}
 
     - name: CMake
       run: |
