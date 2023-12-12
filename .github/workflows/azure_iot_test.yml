@@ -64,6 +64,16 @@ jobs:
     - name: Build
       run: "cd build && ninja"
 
+    - name: Additional Build
+      if: (matrix.name == 'enable_all')
+      run: |
+        project_dir=../test/regression/azure_iot/project/cmake/validation
+        mkdir -p default_build && pushd default_build && cmake $project_dir -GNinja && ninja && popd
+        mkdir -p enable_iot && pushd enable_iot && cmake $project_dir -GNinja -DNXD_ENABLE_AZURE_IOT=ON -DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT && ninja && popd
+        mkdir -p disable_iot && pushd disable_iot && cmake $project_dir -GNinja -DNXD_ENABLE_AZURE_IOT=OFF && ninja && popd
+        mkdir -p enable_ism && pushd enable_ism && cmake $project_dir -GNinja -DNXD_ENABLE_AZURE_IOT=ON -DNX_AZURE_DISABLE_IOT_SECURITY_MODULE=OFF -DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT && ninja && popd
+        mkdir -p disable_ism && pushd disable_ism && cmake $project_dir -GNinja -DNXD_ENABLE_AZURE_IOT=ON -DNX_AZURE_DISABLE_IOT_SECURITY_MODULE=ON && ninja && popd
+
     - name: Memory measurement
       run: |
         cd build
