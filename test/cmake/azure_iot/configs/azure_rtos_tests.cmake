@@ -1,9 +1,9 @@
 # Enable testing
 enable_testing()
 
-set(SDK_FOLDER "${PROJECT_SOURCE_DIR}/../../../../../addons/azure_iot")
+set(SDK_FOLDER "${PROJECT_SOURCE_DIR}/../../../addons/azure_iot")
 set(SDK_CERT_SAMPLE_FOLDER "${SDK_FOLDER}/samples/cert")
-set(AZURE_EMBEDDED_SDK_TESTS_FOLDER "${PROJECT_SOURCE_DIR}/../../tests")
+set(AZURE_EMBEDDED_SDK_TESTS_FOLDER "${PROJECT_SOURCE_DIR}/../../regression/azure_iot")
 
 set(NX_AZURE_DISABLE_IOT_SECURITY_MODULE
     OFF

@@ -1,6 +1,6 @@
 # Set folder
-set(TX_FOLDER "${PROJECT_SOURCE_DIR}/../../threadx")
-set(NXD_FOLDER "${PROJECT_SOURCE_DIR}/../../../../..")
+set(TX_FOLDER "${PROJECT_SOURCE_DIR}/../threadx")
+set(NXD_FOLDER "${PROJECT_SOURCE_DIR}/../../..")
 
 # Add tx
 add_subdirectory(${TX_FOLDER} threadx)
