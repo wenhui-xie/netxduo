@@ -30,7 +30,7 @@ jobs:
         name: ["enable_all"]
         cflags: [""]
         cmake_flags: ["-DIOT_SECURITY_MODULE_DIST_TARGET=RTOS_BASE_UT"]
-        coverage: true
+        coverage: [true]
         include:
           - name: "disable_precondition"
             cflags: "-DAZ_NO_PRECONDITION_CHECKING -DAZ_NO_LOGGING -DNX_DISABLE_IPV6"
@@ -72,7 +72,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.11.0
       if: always()
       with:
-        check_name: Test Results Azure IoT
+        check_name: Test Results AzureIoT
         files: |
           ./build/*.xml
 
@@ -80,7 +80,7 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: test_reports_Azure_IoT
+        name: test_reports_AzureIoT
         path: |
           ./build/*.txt
           ./build/Testing/**/*.xml
@@ -90,7 +90,10 @@ jobs:
 
     - name: Generate Code Coverage
       if: (matrix.coverage)
-      run: "cd build && gcovr -r $(pwd) -f '../addons/azure_iot/nx_.*.c' --xml-pretty > azure_iot_coverage.xml"
+      run: |
+        mkdir -p coverage_report/AzureIoT
+        gcovr --object-directory=./build/netxduo/CMakeFiles/netxduo.dir/addons/azure_iot -r ./addons/azure_iot --xml-pretty --output coverage_report/azure_iot_coverage.xml
+        gcovr --object-directory=./build/netxduo/CMakeFiles/netxduo.dir/addons/azure_iot -r ./addons/azure_iot --html --html-details --output coverage_report/AzureIoT/index.html
 
     - name: Generate Code Coverage Results Summary
       if: (matrix.coverage)
@@ -105,7 +108,7 @@ jobs:
     - name: Write Code Coverage Summary
       if: (matrix.coverage)
       run: |
-        echo "## Coverage Report Azure IoT" >> $GITHUB_STEP_SUMMARY
+        echo "## Coverage Report AzureIoT" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
     - name: Create CheckRun for Code Coverage
@@ -113,7 +116,7 @@ jobs:
       uses: LouisBrunner/checks-action@v1.6.2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        name: Code Coverage Azure IoT
+        name: Code Coverage AzureIoT
         conclusion: ${{ job.status }}
         output: |
           {"summary":"Coverage Report"}
@@ -123,7 +126,7 @@ jobs:
       if: ((github.event_name == 'push') || (github.event.pull_request.head.repo.full_name == github.repository)) && (matrix.coverage)
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        header: Code Coverage Azure IoT
+        header: Code Coverage AzureIoT
         path: code-coverage-results.md
 
     - name: Upload Code Coverage Artifacts
@@ -133,9 +136,3 @@ jobs:
         name: coverage_report
         path: ./coverage_report
         retention-days: 1
-          
-    - name: Upload Code Coverage Pages
-      uses: actions/upload-pages-artifact@v2.0.0
-      if: (matrix.coverage)
-      with:
-        path: ./coverage_report/azure_iot_coverage
