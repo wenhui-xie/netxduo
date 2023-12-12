@@ -60,7 +60,7 @@ jobs:
       with:
         check_name: Test Results Azure IoT
         files: |
-          ./build/*/*.xml
+          ./build/Testing/**/*.xml
 
     - name: Upload Test Results
       if: success() || failure()
