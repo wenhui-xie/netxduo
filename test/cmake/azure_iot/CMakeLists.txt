@@ -19,7 +19,7 @@ project(AzureIoTMiddleware LANGUAGES C ASM)
 
 # Set build configurations
 set(BUILD_CONFIGURATIONS
-    default_build_coverage disable_precondition_biuld disable_security_module_build)
+    default_build_coverage disable_precondition_build disable_security_module_build)
 set(CMAKE_CONFIGURATION_TYPES
     ${BUILD_CONFIGURATIONS}
     CACHE STRING "list of supported configuration types" FORCE)
